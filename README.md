@@ -78,6 +78,13 @@ export IHC_KRONOS_REPO=/path/to/Kronos         # local clone of the Kronos repos
 
 Alternatively create an untracked `src/local_config.py` defining the same names.
 
+## Setup
+
+```bash
+pip install -r requirements.txt
+git clone https://github.com/shiyu-coder/Kronos && export IHC_KRONOS_REPO=$PWD/Kronos
+```
+
 ## Reproduction
 
 ```bash

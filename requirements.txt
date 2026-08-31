@@ -1,0 +1,18 @@
+# Core (versions used in the reported runs; CPU-only is sufficient throughout)
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.15.3
+torch==2.13.0
+scikit-learn==1.7.2
+lightgbm==4.7.0
+matplotlib==3.10.9
+pyarrow                 # parquet I/O
+
+# Model weights are pulled from the Hugging Face Hub
+huggingface_hub
+
+# Optional: only needed by src/extract_chronos.py (cross-model control experiment)
+# chronos-forecasting
+
+# The Kronos model code is not on PyPI: clone it and point IHC_KRONOS_REPO at it
+#   git clone https://github.com/shiyu-coder/Kronos
