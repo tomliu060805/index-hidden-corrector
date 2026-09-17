@@ -1,6 +1,6 @@
 """指数版 512 维隐层提取: 000300/000905/000852 三宽基, 5min, 2014-2026
 
-复刻此前内部研究的隐层提取口径:
+复刻 kronos_riskguard 场景三口径:
   - L=128 上下文, 窗口自身 z-score (mean/std), clip±5
   - 每个决策点独立前向 (坑#2: 不能滑窗复用, 归一化参数会带未来)
   - decode_s2 用单位置 sibling 调用 (坑#1: eval 下整序列 teacher-forcing 非因果)
@@ -8,13 +8,15 @@
 决策点: 所有 bar 0..35 (未来12根5min留在日内), 36点/天 × 3指数
 输出: out/hidden/chunk_XXXX.npz (h: float16, meta: [gt, ci, nll, ent])
 """
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
+import sys as _sys; _sys.path.insert(0, _os.path.join(_R, 'src'))
+import config as CFG   # 数据路径走环境变量, 见 src/config.py
 import os, sys, time, argparse, numpy as np, pandas as pd, torch
 import torch.nn.functional as F
 from multiprocessing import Pool
 
-sys.path.insert(0, KRONOS_REPO)
-from config import KRONOS_REPO
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, CFG.KRONOS_REPO)
+BASE = f'{_R}'
 OUT = f'{BASE}/out/hidden'
 COLS = ['open', 'high', 'low', 'close', 'volume', 'amount']
 CODES = ['000300.XSHG', '000905.XSHG', '000852.XSHG']

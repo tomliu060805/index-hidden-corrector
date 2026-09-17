@@ -1,13 +1,15 @@
 """实验② 规模消融: Kronos-base 提取 final_last 隐层 -> out/hidden_base/
 决策点与原提取同构; meta=(t,j)"""
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
+import sys as _sys; _sys.path.insert(0, _os.path.join(_R, 'src'))
+import config as CFG   # 数据路径走环境变量, 见 src/config.py
 import os, sys, time, argparse, numpy as np, torch
 from multiprocessing import Pool
-sys.path.insert(0, KRONOS_REPO)
-from config import KRONOS_REPO, PROJECT_ROOT
+sys.path.insert(0, CFG.KRONOS_REPO)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import extract_index_hidden as E
 
-OUT = os.path.join(PROJECT_ROOT, 'out/hidden_base')
+OUT = f'{_R}/out/hidden_base'
 L, CLIP, H = E.L, E.CLIP, E.H
 _G = E._G
 

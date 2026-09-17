@@ -1,14 +1,14 @@
 """波动目标化回测: V1(M0基线预报) vs V2(M2隐层预报) —— 经济检验主门
 
-口径对齐此前内部研究的波动目标化回测:
+口径对齐 kronos_riskguard/backtest_voltarget.py:
   仓位 w_t = clip(target/pred_vol_t, 0, 3), target=train中位数(使train均仓≈1)
   bar t 决策用 t 收盘信息, 作用于 t→t+1 收益; 日内5min不含隔夜; 成本=cost·|Δw|
   bar 36-47 无预报, 日内ffill仓位; 主指标 Sharpe(尺度无关) + 波动离散度(std日波动/均值)
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import numpy as np, pandas as pd
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 CODES = ['000300.XSHG', '000905.XSHG', '000852.XSHG']
 BARS_Y = 48 * 242.0
 

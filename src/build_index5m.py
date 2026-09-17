@@ -3,13 +3,14 @@
 输出: out/index5m.parquet  列 date,bar,code,open,high,low,close,volume,amount
 bar 0..47 (上午24+下午24, 右边界), 缺失bar不出行 (下游按稠密网格重排后=NaN)
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
+import sys as _sys; _sys.path.insert(0, _os.path.join(_R, 'src'))
+import config as CFG   # 数据路径走环境变量, 见 src/config.py
 import glob, os, numpy as np, pandas as pd
 from multiprocessing import Pool
-from config import INDEX_1M_DIR, PROJECT_ROOT
 
-SRC = INDEX_1M_DIR
-OUT = os.path.join(PROJECT_ROOT, 'out')
+SRC = CFG.INDEX_1M_DIR
+OUT = f'{_R}/out'
 CODES = ['000300.XSHG', '000905.XSHG', '000852.XSHG']
 
 

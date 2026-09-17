@@ -2,13 +2,14 @@
 """图表 v1: 期货覆盖层净值/超额/逐年超额 + 4 幅逻辑图
 输出 -> figures/v1-futures-overlay/
 """
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, os, numpy as np, pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 OUT = f'{B}/figures/v1-futures-overlay'
 os.makedirs(OUT, exist_ok=True)
 sys.path.insert(0, f'{B}/code')

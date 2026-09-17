@@ -1,14 +1,14 @@
 """种子稳健性: GatedLinear 10个种子重训 (1h与2h目标), 报告各段增量的 mean±std/min/max
 岭基线确定性; 只有修正器初始化与batch顺序受种子影响。输出 out/seed_robustness.csv
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import glob, sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2, daily_ic
 from run_paper1_stack import train_gated
 from task3_horizon import load_close, seg_of
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 SEGS = ['train', 'val', 'test', 'holdout']
 SEEDS = list(range(100))
 rows = []

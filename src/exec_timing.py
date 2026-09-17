@@ -4,15 +4,14 @@
 成本代理: 冲击 ∝ σ_realized (平方根律下同量同ADV时冲击正比于波动)
 指标: 成交量加权实现波动 Σq·|r| / Σq  (越低越省)
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import PROJECT_ROOT
+sys.path.insert(0,f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit
 CODES=['000300.XSHG','000905.XSHG','000852.XSHG']
 
 d,Hm=load_all(); seg=d.seg.values; tr=seg=='train'
-z=np.load(os.path.join(PROJECT_ROOT, 'out/paper1_preds.npz'))
+z=np.load(f'{_R}/out/paper1_preds.npz')
 d=d.copy(); d['pv1']=np.exp(z['yh0']); d['pv2']=np.exp(z['yh0']+z['p2']); d['seg']=seg
 # 教科书: 滚动1日窗已实现波动 (v48 就是过去48根|r|均值, 已 shift1)
 d['tb']=d['v48'].values

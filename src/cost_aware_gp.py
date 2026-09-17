@@ -3,14 +3,15 @@
 ③ 三种训练目标: (a)标准MSE (b)截断加权MSE (c)决策导向(直接优化净P&L)
 ④ GP: 二次成本->部分调整(EMA), 线性成本->无交易带; 由参数解出最优交易速率a, 与经验最优对比
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd, torch, torch.nn as nn
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 from run_paper1_stack import GatedLinear
 from task3_horizon import load_close
 torch.set_num_threads(40)
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B=f'{_R}'
+
 d,Hm=load_all(); seg=d.seg.values; tr=seg=='train'; va=seg=='val'
 y=np.log(d['fvol'].values)
 Xb=np.column_stack([np.column_stack([np.log(np.clip(d[c].values,1e-8,None)) for c in ['v12','v48','v240','aret']]),

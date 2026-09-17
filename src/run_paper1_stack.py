@@ -7,10 +7,9 @@ M3 = M2 + LGBM残差                                —— 完整混合栈 (论�
 M4 = M0 + LGBM残差(无隐层特征)                     —— 隐层归因: M1−M4 = 隐层通过树的贡献
 早停/调参只用 val; test 只做最终报告; holdout 锁定不碰
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd, torch, torch.nn as nn
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import PROJECT_ROOT
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2, three_corr, daily_ic
 import lightgbm as lgb
 
@@ -134,7 +133,7 @@ def main():
         m = mt & (d.j == jj).values
         print(f'  {c}: {r2(y, yh0, m):.4f} → {r2(y, yh3, m):.4f} (Δ{r2(y, yh3, m)-r2(y, yh0, m):+.4f})')
 
-    np.savez(fos.path.join(PROJECT_ROOT, 'out/paper1_preds.npz'),
+    np.savez(f'{_R}/out/paper1_preds.npz',
              yh0=yh0, p1=p1, p2=p2, p3=p3, p4=p4, y=y,
              seg=d.seg.values.astype('U8'), date=d.date.values.astype('U10'),
              j=d.j.values, bar=d.bar.values)

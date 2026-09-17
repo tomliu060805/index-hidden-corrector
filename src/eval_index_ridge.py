@@ -9,11 +9,11 @@ B4  = 仅512维隐层
      / 论文一三相关性 (pooled, per-day, cross-day)
 切分: train≤2023-04-27, val≤2024-06-07, test≤2025-07-17, holdout>(不打印,锁定)
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import glob, numpy as np, pandas as pd
 from scipy.stats import spearmanr
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE = f'{_R}'
 H = 12
 CODES = ['000300.XSHG', '000905.XSHG', '000852.XSHG']
 

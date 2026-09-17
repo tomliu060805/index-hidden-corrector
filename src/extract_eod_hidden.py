@@ -1,13 +1,13 @@
 """补提收盘决策点 (bar 47, 15:00) 的 512 维隐层 —— 供次日RV预报 (任务3)
 复用 extract_index_hidden 的全部口径, 仅决策点不同; 输出 out/hidden_eod/
 """
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import os, sys, time, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import PROJECT_ROOT
 import extract_index_hidden as E
 from multiprocessing import Pool
 
-OUT = os.path.join(PROJECT_ROOT, 'out/hidden_eod')
+OUT = f'{_R}/out/hidden_eod'
 E.OUT = OUT   # run_chunk 写到这里
 
 

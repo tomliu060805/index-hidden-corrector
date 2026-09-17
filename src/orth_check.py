@@ -1,25 +1,24 @@
-"""正交性对拍: M2隐层增量 (p2) vs 一组成分股横截面广度信号 (CSI500, 2020+, 重叠决策点)
-
-注: 广度面板来自本仓库之外的一项内部研究, 未随仓发布; 列名以中性名给出。
-    需自备一个含 (date, ti) 与若干广度列的 parquet, 路径由 BREADTH_PANEL 指定。
+"""正交性对拍: M2隐层增量 (p2) vs 广度熵/广度NLL/clv/uw (000905, 2020+, ti重叠点)
 
 问题: p2 的波动预报增量有多少被已有广度信号解释?
 口径: log空间, 系数只在train拟合冻结; F3−F1 = p2在广度之后的增量, F3−F2 = 广度在p2之后的增量
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
+import sys as _sys; _sys.path.insert(0, _os.path.join(_R, 'src'))
+import config as CFG   # 数据路径走环境变量, 见 src/config.py
 import numpy as np, pandas as pd
 from scipy.stats import spearmanr
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 z = np.load(f'{B}/out/paper1_preds.npz')
 d = pd.DataFrame({'date': z['date'], 'bar': z['bar'], 'j': z['j'], 'y': z['y'],
                   'yh0': z['yh0'], 'p2': z['p2'], 'seg': z['seg']})
 d = d[d.j == 1].copy()                      # 000905
 d['ti'] = d['bar'] + 1
 
-BREADTH_PANEL = os.environ.get('IHC_BREADTH_PANEL', '/path/to/breadth_panel.parquet')
-cb = pd.read_parquet(BREADTH_PANEL)
-BR = ['cs_ent_tod', 'cs_nll_tod', 'cs_signal_a', 'cs_signal_b']   # 四个横截面广度信号列
+# 外部面板(本仓之外的广度信号), 路径经 IHC_BREADTH_PANEL 指定
+cb = pd.read_parquet(CFG.BREADTH_PANEL)
+BR = ['cs_ent_tod', 'cs_nll_tod', 'cs_clv', 'cs_uw']
 m = d.merge(cb[['date', 'ti'] + BR], on=['date', 'ti'], how='inner').dropna(subset=BR)
 print(f'join后 {len(m):,} 行, {m.date.nunique()} 天, ' +
       '/'.join(f'{k}={int((m.seg==k).sum()):,}' for k in ['train','val','test','holdout']))

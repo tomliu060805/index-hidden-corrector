@@ -1,11 +1,11 @@
 """通用修正器: 无指数身份(去idx独热)训练GL于原三指数 -> 冻结迁移到三个新指数"""
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import glob, sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 from run_paper1_stack import GatedLinear
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 SEGS = ['val', 'test', 'holdout']
 H = 12
 seg_of = lambda dt: np.where(dt <= '2023-04-27', 'train', np.where(dt <= '2024-06-07', 'val',

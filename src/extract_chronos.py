@@ -1,13 +1,13 @@
 """实验③ 换基础模型: Chronos-t5-small 编码器嵌入 -> out/hidden_chronos/
 输入=单变量收盘价窗口128 (Chronos内部自做mean-scale); 存 EOS位置 与 mean池化 两路 (各512维)
 决策点与原提取同构; meta=(t,j)"""
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import os, sys, time, argparse, numpy as np, torch
 from multiprocessing import Pool
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import PROJECT_ROOT
 import extract_index_hidden as E
 
-OUT = os.path.join(PROJECT_ROOT, 'out/hidden_chronos')
+OUT = f'{_R}/out/hidden_chronos'
 L, H = E.L, E.H
 _G = {}
 

@@ -1,12 +1,12 @@
 """重训 2h 目标 (bar≤23) 的 M0+GatedLinear 并保存预测 -> out/preds_2h.npz (供期货覆盖层用)"""
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import glob, sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import ridge_fit, r2
 from run_paper1_stack import train_gated
 from task3_horizon import load_close, seg_of
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 np.random.seed(0); torch.manual_seed(0)
 H24 = 24
 

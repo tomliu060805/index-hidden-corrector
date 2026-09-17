@@ -1,16 +1,16 @@
-"""滚动重训 vs 冻结 (1h目标)
+"""稳健性补丁③: 滚动重训 vs 冻结 (1h目标)
 
 年度 walk-forward: 每年1月1日用截至上年末的全部数据重训 (岭+GatedLinear, 早停val=训练窗最后15%日期),
 预测当年; 与冻结版(系数2023-04, 早停val=2023-04~2024-06)在相同评估行上比 R²。
 注: holdout 已开封, 2026年重训窗含2025H2数据, 属开封后的事后稳健性实验, 不影响主结论的预注册性。
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 from run_paper1_stack import train_gated
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 d, Hm = load_all()
 seg = d.seg.values
 y = np.log(d['fvol'].values)

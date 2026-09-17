@@ -2,13 +2,13 @@
 协议: 本地拟合 M0 基线(新指数train段) + 冻结GL修正(idx独热=0, 用原mu/sd标准化)
 对照: 本地训练GL(skyline) | 附: LOIO(300+1000训练→500评估)
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import glob, sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import ridge_fit, r2
 from run_paper1_stack import GatedLinear, train_gated
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 CODES_T = ['000016.XSHG', '399006.XSHE', '000688.XSHG']
 NAMES = ['上证50', '创业板指', '科创50']
 SEGS = ['val', 'test', 'holdout']

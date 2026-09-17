@@ -4,10 +4,10 @@
 预报: preds npz (1h: bar0..35 / 2h: bar0..23), 仓位 w_lev=clip(tgt/pv2, 1, 3)
 δ 无交易带 ∈ {0.15, 0.3}; 全网格 train+val 净Sharpe 选定, test/holdout 冻结
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import numpy as np, pandas as pd
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 PROD = {'IC': 1, 'IM': 2}
 CAP, BARS_Y = 3.0, 242.0
 fut = pd.read_parquet(f'{B}/out/futures_dom5m.parquet')

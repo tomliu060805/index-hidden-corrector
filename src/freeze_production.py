@@ -2,13 +2,13 @@
 """固化生产模型包: 岭系数 + GatedLinear权重 + 全部配置常量 -> production/model_bundle.pt
 使 production/ 完全自包含, 推理不再依赖训练数据
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit
 from task3_horizon import load_close, seg_of
 import glob
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B=f'{_R}'
 H24=24            # 生产用 2h 预报 (阶段四选定)
 
 # —— 重建 2h 训练面板 (与 save_preds_2h.py 完全一致) ——

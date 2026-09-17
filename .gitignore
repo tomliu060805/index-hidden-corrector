@@ -3,5 +3,14 @@ __pycache__/
 *.log
 nohup.out
 src/local_config.py
+
+# 大文件 / 运行产物, 不入仓
 production/model_bundle.pt
 production/replay_*.csv
+
+# 个人信息不入仓
+paper/
+paper/author.local.tex
+docs/resume*
+docs/archive/resume*
+*论文.pdf

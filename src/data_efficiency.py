@@ -1,14 +1,14 @@
 """数据效率: 冻结TSFM隐层+GL vs 从零Transformer, 训练数据只用train末尾{5%,15%,50%}天
 两臂都在同一缩减数据上重拟合M0基线; 预训练表示的经典优势应在低数据端显现
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, time, numpy as np, pandas as pd, torch, torch.nn as nn
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 from run_paper1_stack import train_gated
 import extract_index_hidden as E
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 SEGS = ['val', 'test', 'holdout']
 torch.set_num_threads(100)
 L = 128

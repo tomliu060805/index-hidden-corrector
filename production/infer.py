@@ -6,14 +6,13 @@
   python infer.py --replay 2026-08-01 2026-08-14    # 区间回放, 输出CSV
 自包含: 只依赖 model_bundle.pt + 权威 1min 行情源 + 冻结 Kronos 权重
 """
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
+import sys as _sys; _sys.path.insert(0, _os.path.join(_R, 'src'))
+import config as CFG   # 数据路径走环境变量, 见 src/config.py
 import os, sys, json, argparse, numpy as np, pandas as pd, torch
-
+sys.path.insert(0, CFG.KRONOS_REPO)
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(os.path.dirname(HERE), 'src')
-sys.path.insert(0, SRC)
-from config import INDEX_1M_DIR, KRONOS_REPO
-sys.path.insert(0, KRONOS_REPO)
-IDX_SRC = INDEX_1M_DIR
+IDX_SRC = CFG.INDEX_1M_DIR
 L, CLIP = 128, 5.0
 COLS = ['open', 'high', 'low', 'close', 'volume', 'amount']
 T48 = ['09:35','09:40','09:45','09:50','09:55','10:00','10:05','10:10','10:15','10:20','10:25','10:30',
@@ -29,7 +28,7 @@ class Engine:
         self.B = torch.load(bundle, weights_only=False)
         self.tok = KronosTokenizer.from_pretrained("NeoQuasar/Kronos-Tokenizer-base").eval()
         self.mdl = Kronos.from_pretrained("NeoQuasar/Kronos-small").eval()
-        from run_paper1_stack import GatedLinear
+        sys.path.insert(0, f'{_R}/src'); from run_paper1_stack import GatedLinear
         self.gl = GatedLinear(self.B['gl_dim'], self.B['gl_rank'])
         self.gl.load_state_dict(self.B['gl_state']); self.gl.eval()
         # ★必须与训练时的指数集合与顺序一致(指数独热按此编码), 产品只取其中两个

@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 1 | 窗口归一化 | z-score 的 μ/σ 只用窗口自身 128 根 bar，不用全局统计量 | `extract_index_hidden.py` run_chunk |
 | 2 | 前向方式 | 每个决策点独立一次前向，**不滑窗复用**（复用会让归一化参数吸入未来 bar——7 月已实证踩坑） | 同上 |
-| 3 | s² 解码头 | Kronos 的 DependencyAwareLayer 在 eval 下非因果（`is_causal=self.training`），用单位置 sibling 调用绕开 | 同上，坑来自 a prior internal study |
+| 3 | s² 解码头 | Kronos 的 DependencyAwareLayer 在 eval 下非因果（`is_causal=self.training`），用单位置 sibling 调用绕开 | 同上，坑来自 kronos_riskguard |
 | 4 | 已实现波动特征 | v12/v48/v240 全部 `shift(1)` 后再滚动，|r_t| 用的是决策 bar 自身（已收盘） | `eval_index_ridge.py` |
 | 5 | 预报目标 | fvol 只用 t+1..t+H；决策 bar ≤ 47−H 保证未来窗不跨日、不含隔夜 | 同上 |
 | 6 | 岭回归系数 | 只在 train（≤2023-04-27）拟合并冻结 | `ridge_fit(tr)` |

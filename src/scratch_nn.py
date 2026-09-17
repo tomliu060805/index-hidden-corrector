@@ -3,13 +3,13 @@
 模型: (a) GRU-64  (b) Transformer d64L2  (c) PCA-512+GatedLinear (线性表示对照)
 协议与生产M2一致: 预测M0残差, val早停, Adam; 目标=1h波动
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, time, numpy as np, pandas as pd, torch, torch.nn as nn
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 import extract_index_hidden as E
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 SEGS = ['val', 'test', 'holdout']
 torch.set_num_threads(100)
 L = 128

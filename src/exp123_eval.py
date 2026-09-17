@@ -2,13 +2,13 @@
 变体: small final_last(原) / mid_last / mean128 / mean12 / 组合 | base final_last | chronos EOS/mean
 最后对 val 最优变体加训 GatedLinear 与生产 M2 对比。
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import glob, sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 from run_paper1_stack import train_gated
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 SEGS = ['val', 'test', 'holdout']
 
 d, Hm = load_all()

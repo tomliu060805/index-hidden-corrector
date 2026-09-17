@@ -1,9 +1,9 @@
 """实验④A 修复版: 日内VaR分位回归 — y标准化+800epoch+train截距校准
 对照: 无条件VaR(train段按指数×bar的分位, 最朴素) / 线性基线Xb / +隐层
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all
 
 torch.set_num_threads(60)

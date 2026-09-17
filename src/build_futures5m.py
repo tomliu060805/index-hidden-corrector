@@ -6,14 +6,15 @@
 输出: out/futures_dom5m.parquet 列 date,bar,product,code,open,close,ret(合约内5m logret),
      ov_ret(仅bar0行, 同合约隔夜), roll(当日换合约)
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
+import sys as _sys; _sys.path.insert(0, _os.path.join(_R, 'src'))
+import config as CFG   # 数据路径走环境变量, 见 src/config.py
 import glob, os, numpy as np, pandas as pd
 from multiprocessing import Pool
-from config import DOMINANT_MAP_DIR, FUTURES_1M_DIR, PROJECT_ROOT
 
-SRC = FUTURES_1M_DIR
-DOM = DOMINANT_MAP_DIR
-OUT = os.path.join(PROJECT_ROOT, 'out')
+SRC = CFG.FUTURES_1M_DIR
+DOM = CFG.DOMINANT_MAP_DIR
+OUT = f'{_R}/out'
 PRODUCTS = ('IC', 'IM')
 
 

@@ -3,15 +3,17 @@
 口径: 每5min取近月ATM认购+认沽中价之和 / 标的 ≈ 0.7979*IV*sqrt(T)  =>  IV
 输出 out/mo_iv_5m.parquet: date,bar,iv,straddle_mid,spread_bp,K,T
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
+import sys as _sys; _sys.path.insert(0, _os.path.join(_R, 'src'))
+import config as CFG   # 数据路径走环境变量, 见 src/config.py
 import glob, os, re, numpy as np, pandas as pd
 from multiprocessing import Pool
-from config import INDEX_1M_DIR, OPTIONS_DIR, PROJECT_ROOT
-OUT=os.path.join(PROJECT_ROOT, 'out')
-IDX=INDEX_1M_DIR
+OUT=f'{_R}/out'
+IDX=CFG.INDEX_1M_DIR
+OPT=CFG.OPTIONS_DIR
 
 def one_day(day):
-    f=f'{OPTIONS_DIR}/{day}/MO.parquet'
+    f=f'{OPT}/{day}/MO.parquet'
     if not os.path.exists(f): return None
     df=pd.read_parquet(f, columns=['order_book_id','datetime','a1','b1','volume'])
     ex=df.order_book_id.str.extract(r'^MO(\d{4})([CP])(\d+)$')
@@ -61,7 +63,7 @@ def one_day(day):
     return r
 
 if __name__=='__main__':
-    days=sorted(os.path.basename(p) for p in glob.glob(f'{OPTIONS_DIR}/2026*'))
+    days=sorted(os.path.basename(p) for p in glob.glob(f'{OPT}/2026*'))
     with Pool(24) as p:
         parts=[x for x in p.imap(one_day,days) if x is not None]
     df=pd.concat(parts,ignore_index=True)

@@ -1,11 +1,11 @@
 """holdout 段 (>2025-07-17, 从未参与训练/早停/选择) 一次性开封
 预注册: 最终模型 = M2 (GatedLinear, val最优); 其余模型只做参照
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd
 from scipy.stats import spearmanr
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 z = np.load(f'{B}/out/paper1_preds.npz')
 y, seg, date, j = z['y'], z['seg'], z['date'], z['j']
 models = {'M0 基线': z['yh0'], 'M1 +LGBM(含隐层)': z['yh0'] + z['p1'],

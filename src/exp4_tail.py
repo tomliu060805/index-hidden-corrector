@@ -5,14 +5,15 @@ A. 未来1h收益 q05/q01 分位回归 (线性pinball, torch): 基线Xb vs Xb+�
 B. 大跌概率: label = fret < train段该指数5%分位, 线性logistic, AUC
 C. 尾部波动: log q95(|r|, 未来12根), 岭回归 R²
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 
 torch.set_num_threads(60)
 SEGS = ['val', 'test', 'holdout']
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
+
 d, Hm = load_all()
 seg = d.seg.values
 tr = seg == 'train'

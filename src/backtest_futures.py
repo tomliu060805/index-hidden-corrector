@@ -8,10 +8,10 @@
   - 变体: SYM_V1/SYM_V2 对称VT(cap3) | LEV 仅加仓floor1 | ASYM(θ) pv2<θ·pv1才加仓 | 带δ无交易带
   - θ∈{0.85,0.9,0.95,1.0}×δ∈{0,0.15,0.3} 只在 train+val 选(成本C), test/holdout 冻结报告
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import numpy as np, pandas as pd
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 PROD = {'IC': 1, 'IM': 2}          # product -> npz j
 CAP = 3.0
 BARS_Y = 242.0

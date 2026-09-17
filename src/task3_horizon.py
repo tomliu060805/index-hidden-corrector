@@ -5,13 +5,13 @@
    模型: H2=+512隐层(岭) H3=+GatedLinear
 ①用既有日内隐层, 决策bar≤23, 目标=未来24根|r|均值, 复用M0/GatedLinear结构
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import glob, sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import ridge_fit, r2
 from run_paper1_stack import train_gated
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 CODES = ['000300.XSHG', '000905.XSHG', '000852.XSHG']
 SEGS = ['train', 'val', 'test', 'holdout']
 np.random.seed(0); torch.manual_seed(0)

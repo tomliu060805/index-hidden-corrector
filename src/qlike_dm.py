@@ -1,16 +1,16 @@
-"""QLIKE 损失 + Diebold-Mariano 检验 + 洗牌安慰剂
+"""稳健性补丁②: QLIKE 损失 + Diebold-Mariano 检验 + 洗牌安慰剂
 
 QLIKE(方差口径): L = RV/F − log(RV/F) − 1, RV=fvol², F=(c·exp(ŷ))², c=train段乘性偏差校正(各模型自己的)
 DM: 日均损失差 d̄ 的 t 检验, Newey-West lag5 (日度聚合已消掉大部分日内重叠)
 安慰剂: 把隐层在同bar内跨日随机重排后重训 GatedLinear -> 增量应塌到≈0 (证明增量非结构伪影)
 """
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd, torch
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit, r2
 from run_paper1_stack import train_gated
 
-B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+B = f'{_R}'
 SEGS = ['val', 'test', 'holdout']
 
 

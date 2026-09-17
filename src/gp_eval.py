@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """③按经济指标重评三种训练目标 + ④Garleanu-Pedersen最优交易框架应用"""
-import os
+import os as _os; _R = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # 仓库根(随目录搬迁自动跟随)
 import sys, numpy as np, pandas as pd
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,f'{_R}/src')
 from eval_index_ridge import load_all, ridge_fit
 import backtest_futures as BF
-B=os.path.dirname(os.path.dirname(os.path.abspath(__file__))); BY=242.0
+B=f'{_R}'; BY=242.0
 d,Hm=load_all(); seg=d.seg.values; tr=seg=='train'
 y=np.log(d['fvol'].values)
 Xb=np.column_stack([np.column_stack([np.log(np.clip(d[c].values,1e-8,None)) for c in ['v12','v48','v240','aret']]),

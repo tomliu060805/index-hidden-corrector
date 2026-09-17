@@ -5,7 +5,7 @@
 ## 快速使用
 
 ```bash
-PY=python
+PY=python   # conda env: alphagen (torch CPU + lightgbm)
 export HF_HUB_OFFLINE=1                      # Kronos 权重走本地 HF 缓存
 
 $PY infer.py --date 2026-08-14 --bar 20      # 单个决策点（实盘用，输出 JSON）
@@ -46,8 +46,8 @@ $PY infer.py --replay 2026-08-01 2026-08-14  # 区间回放，输出 CSV（对�
 | `model_bundle.pt` | 冻结模型包：岭系数、GatedLinear 权重、标准化参数、σ*、全部配置 |
 | `replay_*.csv` | 回放输出 |
 
-依赖：权威指数 1min 库 `$IHC_INDEX_1M`；本地 HF 缓存的
-`NeoQuasar/Kronos-small` 与 Tokenizer；项目 conda 环境。
+依赖：权威指数 1min 库（环境变量 `IHC_INDEX_1M`）；本地 HF 缓存的
+`NeoQuasar/Kronos-small` 与 Tokenizer；conda 环境 `alphagen`。
 
 ## 对账（每次改动后必跑）
 
