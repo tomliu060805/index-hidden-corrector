@@ -38,6 +38,8 @@ v2 只做**预报层**，不含交易/风控落地；下面 v1 的期货覆盖�
 src/            全部脚本（数据→提取→建模→回测→稳健性→图表）
 docs/            无前视审计 · 稳健性检验
 figures/            v1 净值/超额/逐年超额 + 4 幅逻辑图（README 索引）
+paper/           论文正文 main.tex / main.pdf（19 页，署名 Anonymous）+ 11 幅图 + references.bib
+production/      自包含推理引擎 infer.py + model_bundle.pt（冻结权重，147KB）
 out/             中间产物（隐层库/预测/面板，不入 git）
 RESULTS.md   全量结论正文（按阶段一~五组织）
 ```
