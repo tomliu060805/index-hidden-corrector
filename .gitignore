@@ -17,11 +17,8 @@ paper/*.bbl
 paper/*.blg
 paper/*.toc
 
-# 个人信息不入仓
-# paper/ 本身现已入仓, 但 main.tex 的署名必须保持 Anonymous:
-# 正式署名走未跟踪的 paper/author.local.tex, 且 main.pdf 必须由去署名的
-# main.tex 重新编译后才可提交 —— 旧编译产物会带作者名与邮箱。
-paper/author.local.tex
+# ★论文不入仓(用户 2026-09-22 明令) —— 整个 paper/ 目录不公开
+paper/
 docs/resume*
 docs/archive/resume*
 *论文.pdf
