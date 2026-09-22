@@ -12,6 +12,8 @@ to override them locally.
     IHC_DOMINANT_MAP  per-day parquet, product -> dominant contract
     IHC_OPTIONS       per-day parquet, index-option ticks with order book
     IHC_KRONOS_REPO   local clone of the Kronos model repository
+    IHC_CCFX_L2       per-day zip, CFFEX index-futures L2 tick (5 levels)
+    IHC_ETF_TAQ       per-day parquet, SSE ETF L2 TAQ incl. IOPV/NAV
     IHC_BREADTH_PANEL optional: external cross-sectional breadth panel
                       (date, ti, cs_*) used only by src/orth_check.py
 """
@@ -27,6 +29,9 @@ _DEFAULTS = dict(INDEX_1M_DIR='/path/to/index_1min',
                  DOMINANT_MAP_DIR='/path/to/dominant_map',
                  OPTIONS_DIR='/path/to/options_tick',
                  KRONOS_REPO='/path/to/Kronos',
+                 CCFX_L2_DIR='/path/to/ccfx_l2_tick',
+                 ETF_TAQ_DIR='/path/to/etf_l2_taq',
+                 ETF_TICK_DIR='/path/to/etf_tick_l1',
                  BREADTH_PANEL='/path/to/cs_breadth_panel.parquet')
 _ENV = dict(INDEX_1M_DIR='IHC_INDEX_1M',
             INDEX_DAILY_DIR='IHC_INDEX_DAILY', INDEX_INFO='IHC_INDEX_INFO', FUTURES_1M_DIR='IHC_FUTURES_1M',
